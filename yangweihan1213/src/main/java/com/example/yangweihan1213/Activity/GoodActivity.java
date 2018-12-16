@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class GoodActivity extends AppCompatActivity implements IVIew {
         private boolean p;
         private ShowDataAdapter adapter;
         private final int mSpanCount = 2;
+        private Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,16 @@ public class GoodActivity extends AppCompatActivity implements IVIew {
         LinearLayoutManager layoutManager = new LinearLayoutManager(GoodActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
+        //搜索按钮
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = goods_name.getText().toString();
+                iPresenterlmpl.startRequest(String.format(Apis.ShowDataurl,s,pager),UserBean.class);
+            }
+        });
+
         //按销量排序
         goods_num.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +70,7 @@ public class GoodActivity extends AppCompatActivity implements IVIew {
                 iPresenterlmpl.startRequest(Apis.priceDataurl,UserBean.class);
             }
         });
+
 
 
         //管理器
@@ -131,6 +144,7 @@ public class GoodActivity extends AppCompatActivity implements IVIew {
         goods_price = findViewById(R.id.goods_price);
         goods_shai = findViewById(R.id.goods_shai);
         xRecyclerView = findViewById(R.id.xrecycview);
+        button = findViewById(R.id.shousuo);
     }
 
     //数据请求成功
